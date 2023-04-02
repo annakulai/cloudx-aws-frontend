@@ -14,7 +14,6 @@ export default function Products() {
   if (isLoading) {
     return <Typography>Loading...</Typography>;
   }
-
   return (
     <Grid container spacing={4}>
       {/* eslint-disable-next-line @typescript-eslint/no-unused-vars */}
@@ -25,7 +24,7 @@ export default function Products() {
           >
             <CardMedia
               sx={{ pt: "56.25%" }}
-              image={`https://source.unsplash.com/random?sig=${index}`}
+              image={`${product.image}`}
               title="Image title"
             />
             <CardContent sx={{ flexGrow: 1 }}>
