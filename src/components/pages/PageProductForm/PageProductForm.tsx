@@ -1,17 +1,17 @@
-import Button from "@mui/material/Button";
-import Grid from "@mui/material/Grid";
-import { AvailableProduct, ProductSchema } from "~/models/Product";
-import { Formik, Field, FormikProps, Form } from "formik";
-import TextField from "~/components/Form/TextField";
-import { useNavigate, useParams } from "react-router-dom";
-import PaperLayout from "~/components/PaperLayout/PaperLayout";
-import Typography from "@mui/material/Typography";
+import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
+import { Product, ProductSchema } from '~/models/Product';
+import { Formik, Field, FormikProps, Form } from 'formik';
+import TextField from '~/components/Form/TextField';
+import { useNavigate, useParams } from 'react-router-dom';
+import PaperLayout from '~/components/PaperLayout/PaperLayout';
+import Typography from '@mui/material/Typography';
 import {
   useAvailableProduct,
   useInvalidateAvailableProducts,
   useRemoveProductCache,
   useUpsertAvailableProduct,
-} from "~/queries/products";
+} from '~/queries/products';
 
 const initialValues: Product = ProductSchema.cast({});
 
@@ -22,7 +22,7 @@ export default function PageProductForm() {
   const removeProductCache = useRemoveProductCache();
   const { data, isLoading } = useAvailableProduct(id);
   const { mutateAsync: upsertAvailableProduct } = useUpsertAvailableProduct();
-  const onSubmit = (values: AvailableProduct) => {
+  const onSubmit = (values: Product) => {
     const formattedValues = ProductSchema.cast(values);
     const productToSave = id
       ? {
@@ -34,7 +34,7 @@ export default function PageProductForm() {
       onSuccess: () => {
         invalidateAvailableProducts();
         removeProductCache(id);
-        navigate("/admin/products");
+        navigate('/admin/products');
       },
     });
   };
@@ -42,7 +42,7 @@ export default function PageProductForm() {
   return (
     <PaperLayout>
       <Typography component="h1" variant="h4" align="center" mb={2}>
-        {id ? "Edit product" : "Create new product"}
+        {id ? 'Edit product' : 'Create new product'}
       </Typography>
       {isLoading ? (
         <>Loading...</>
@@ -52,7 +52,7 @@ export default function PageProductForm() {
           validationSchema={ProductSchema}
           onSubmit={onSubmit}
         >
-          {({ dirty, isSubmitting }: FormikProps<AvailableProduct>) => (
+          {({ dirty, isSubmitting }: FormikProps<Product>) => (
             <Form autoComplete="off">
               <Grid container spacing={2}>
                 <Grid item xs={12}>
@@ -99,7 +99,7 @@ export default function PageProductForm() {
                 <Grid item container xs={12} justifyContent="space-between">
                   <Button
                     color="primary"
-                    onClick={() => navigate("/admin/products")}
+                    onClick={() => navigate('/admin/products')}
                   >
                     Cancel
                   </Button>
