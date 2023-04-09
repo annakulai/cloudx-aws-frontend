@@ -5,7 +5,7 @@ import { server } from "~/mocks/server";
 import { rest } from "msw";
 import API_PATHS from "~/constants/apiPaths";
 import { CartItem } from "~/models/CartItem";
-import { AvailableProduct } from "~/models/Product";
+import { Product } from "~/models/Product";
 import { renderWithProviders } from "~/testUtils";
 import { screen, waitForElementToBeRemoved } from "@testing-library/react";
 import { formatAsPrice } from "~/utils/utils";
