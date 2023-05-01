@@ -2,6 +2,7 @@ import React from "react";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 type CSVFileImportProps = {
   url: string;
@@ -28,8 +29,31 @@ export default function CSVFileImport({ url, title }: CSVFileImportProps) {
 
     // Get the presigned URL
 
+    const authorization_token = localStorage.getItem("authorization_token"); // YW5uYWt1bGFpOlRFU1RfUEFTU1dPUkQ=
+
+    axios.interceptors.response.use(
+      undefined,
+      function axiosRetryInterceptor(err) {
+        toast.error("Something went wrong", {
+          position: "top-center",
+          autoClose: false,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: 0,
+        });
+
+        console.log(err);
+        return Promise.reject(err);
+      }
+    );
+
     const response = await axios({
       method: "GET",
+      headers: {
+        Authorization: `Basic ${authorization_token}`,
+      },
       url,
       params: {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
