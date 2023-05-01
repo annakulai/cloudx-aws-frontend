@@ -29,7 +29,7 @@ export default function CSVFileImport({ url, title }: CSVFileImportProps) {
 
     // Get the presigned URL
 
-    const authorization_token = localStorage.getItem("authorization_token"); // YW5uYWt1bGFpOlRFU1RfUEFTU1dPUkQ=
+    const authorization_token = localStorage.getItem("authorization_token");
 
     axios.interceptors.response.use(
       undefined,
@@ -51,9 +51,11 @@ export default function CSVFileImport({ url, title }: CSVFileImportProps) {
 
     const response = await axios({
       method: "GET",
-      headers: {
-        Authorization: `Basic ${authorization_token}`,
-      },
+      headers: authorization_token
+        ? {
+            Authorization: `Basic ${authorization_token}`,
+          }
+        : undefined,
       url,
       params: {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
